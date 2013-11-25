@@ -1,0 +1,37 @@
+﻿using Nemerle;
+using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Livet;
+using Livet.Messaging;
+using Livet.Nemerle;
+
+namespace NemerleWPFTest.ViewModel
+{
+  public class MainWindowViewModel : ViewModel
+  {     
+    [ViewModelCommand]
+    Replace() : void
+    {
+      this.Input = "くりっくされたよ！";
+    }
+    
+    [ViewModelCommand]
+    ShowMessageBox() : void
+    {
+      this.Messenger.Raise(InformationMessage(this.Input, "Nemerle Test", "MessageBox"))
+    }
+    
+    CanShowMessageBox() : bool
+    {
+      !string.IsNullOrWhiteSpace(this.Input);
+    }
+    
+    [NotifyProperty(["ShowMessageBoxCommand"])]
+    public Input : string { get; set; }
+  }
+}

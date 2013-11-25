@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{EDCC3B85-0BAD-11DB-BC1A-00112FDE8B61}") = "NemerleWPFTest", "NemerleWPFTest\NemerleWPFTest.nproj", "{3B93B173-E4DA-4A10-9185-F5770216D98D}"
+EndProject
+Project("{EDCC3B85-0BAD-11DB-BC1A-00112FDE8B61}") = "Livet.Nemerle", "Livet.Nemerle\Livet.Nemerle.nproj", "{423AFEA4-7614-41B6-BA08-F323DBF047BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B93B173-E4DA-4A10-9185-F5770216D98D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B93B173-E4DA-4A10-9185-F5770216D98D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B93B173-E4DA-4A10-9185-F5770216D98D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B93B173-E4DA-4A10-9185-F5770216D98D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{423AFEA4-7614-41B6-BA08-F323DBF047BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{423AFEA4-7614-41B6-BA08-F323DBF047BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{423AFEA4-7614-41B6-BA08-F323DBF047BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{423AFEA4-7614-41B6-BA08-F323DBF047BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

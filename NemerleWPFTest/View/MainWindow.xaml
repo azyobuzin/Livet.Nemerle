@@ -1,0 +1,37 @@
+﻿<view:MainWindow
+    xmlns="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+    xmlns:view="clr-namespace:NemerleWPFTest.View;assembly=NemerleWPFTest"
+    xmlns:vm="clr-namespace:NemerleWPFTest.ViewModel;assembly=NemerleWPFTest"
+    Width="428" Height="178"
+    Title="Nemerle Test"
+    FontSize="15">
+    <view:MainWindow.DataContext>
+        <vm:MainWindowViewModel />
+    </view:MainWindow.DataContext>
+    
+    <i:Interaction.Triggers>
+        <l:InteractionMessageTrigger Messenger="{Binding Messenger}" MessageKey="MessageBox">
+            <l:InformationDialogInteractionMessageAction />
+        </l:InteractionMessageTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid Margin="12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="6" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBox Text="{Binding Input, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" />
+        
+        <Button Content="Replace Text" Command="{Binding ReplaceCommand}" Grid.Column="0" Grid.Row="2" />
+        <Button Content="Message Box" Command="{Binding ShowMessageBoxCommand}" Grid.Column="1" Grid.Row="2" />
+    </Grid>
+</view:MainWindow>

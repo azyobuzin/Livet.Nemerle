@@ -1,0 +1,56 @@
+﻿using Nemerle;
+using Nemerle.Collections;
+using Nemerle.Compiler;
+using Nemerle.Compiler.Parsetree;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Livet.Commands;
+
+namespace Livet.Nemerle
+{
+  /// Makes an auto-implemented property for the class inherited Livet.NotificationObject. 
+  /// Usage: [NotifyProperty(["command names to notify changed"])] public Foo : string { get; set; }
+  /// Or: [NotifyProperty([a list of command name strings to notify changed])]
+  [MacroUsage(MacroPhase.BeforeInheritance, MacroTargets.Property)]
+  public macro NotifyProperty(builder : TypeBuilder, property : ParsedProperty, params args : list [PExpr])
+  {
+    def raiseCanExecuteChangedMethod = "_notifyproperty_RaiseCanExecuteChangedMethod";
+    when (!builder.GetMethods().Any(m => m.Header.Name == raiseCanExecuteChangedMethod)) {
+      <[ decl:
+        private $(Name(raiseCanExecuteChangedMethod).Id : usesite)(commands : list.[string]) : void {
+          when (commands != null) {
+            foreach (command in commands) {
+              (GetType().InvokeMember(command, BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty, null, this, null) :> ViewModelCommand)
+                .RaiseCanExecuteChanged();
+            }
+          }
+        }
+      ]>
+      |> builder.Define;
+    }
+    
+    def backstore = Macros.NewSymbol(property.Name);
+    <[ decl:
+      private mutable $(backstore.Id : usesite) : $(property.returnType);
+    ]>
+    |> builder.Define;
+    
+    property.getter.Value.Body = <[ $(backstore.Id : usesite); ]>;
+    
+    def propValue = property.setter.Value.header.ParametersReferences.First();
+    def commands = args.FirstOrDefault() ?? PExpr.ListLiteral([]);
+    property.setter.Value.Body = <[
+      when ($(backstore.Id : usesite) != $propValue)
+      {
+        $(backstore.Id : usesite) = $propValue;
+        $(Name("RaisePropertyChanged").Id : usesite)($(property.Name));
+        _notifyproperty_RaiseCanExecuteChangedMethod($commands);
+      }
+    ]>
+  }
+}
